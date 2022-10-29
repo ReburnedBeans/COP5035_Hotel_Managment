@@ -18,6 +18,19 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash('Account created for {form.username.data}!', 'success') #NOT WORKING! The message fails to pop up.
+        # Hey, add something like this to layout.html. This will grab all the flashed messages and display them.
+        # Delete this when you're done. -JP
+        """{% block content %}
+        <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+        </div>
+        {% endfor %}
+        {% block page_content %}{% endblock %}
+        </div>
+        {% endblock %}"""
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
