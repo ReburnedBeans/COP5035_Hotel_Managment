@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <!--Head Title-->
+    {% if title %}
+        <title>Hotel_Name - {{ title }}</title>
+    {% else %}
+        <title>Hotel_Name</title>
+    {% endif %}
+</head>
+<body>
+    <!--Header-->
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-header fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">Hotel_Name</a>
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="/about">About</a>
+                </div>
+                <!--login/register-->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/login">Login</a>
+                    <a class="nav-item nav-link" href="/register">Register</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+    <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true)%}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-({ category })">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+          {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>
