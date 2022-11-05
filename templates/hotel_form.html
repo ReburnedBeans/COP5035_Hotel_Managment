@@ -1,0 +1,75 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+        <div class="form-section">
+            <form method="POST" action="" class="form">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Hotel Sign-In</legend>
+                    <div class="form-group">
+                        {{ form.name.label(class="form-control-label") }}
+                        <div>
+                            <small>This is the name that will show up on the system display.</small>
+                        </div>
+
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <br>
+                            {{ form.name(class="form-control-label form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.room_type.label(class="form-control-label") }}
+                        <div>
+                            <small>Please select from the list below which room you would like to stay in.
+                                <ol>
+                                    <li>1-room small (lowest price)</li>
+                                    <li>1-room medium (low price)</li>
+                                    <li>1-room large (average price)</li>
+                                    <li>2-room medium (expensive price)</li>
+                                    <li>2-room large (very expensive price)</li>
+                                </ol>
+                            </small>
+                        </div>
+                        {% if form.room_type.errors %}
+                            {{ form.room_type(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.room_type.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <br>
+                            {{ form.room_type(class="form-control-label form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.number_of_nights.label(class="form-control-label") }}
+                        <div>
+                            <small>This is the number of nights that your party is planning on staying.</small>
+                        </div>
+
+                        {% if form.number_of_nights.errors %}
+                            {{ form.number_of_nights(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.number_of_nights.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <br>
+                            {{ form.number_of_nights(class="form-control-label form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div>
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+{% endblock content %}

@@ -1,8 +1,25 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegistrationForm, LoginForm
+from flask_sqlalchemy import SQLAlchemy #For using SQLAlchemy
+from forms import HotelForm, RegistrationForm, LoginForm
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1c0f66335b647802e2f8e872def6e6dbd5544841bd963025f2c77a32966fd2cb' #Random Secret key
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' #For using SQLAlchemy
+db = SQLAlchemy(app) #For using SQLAlchemy
+
+#For using SQLAlchemy.
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    number_of_nights = db.Column(db.Integer)
+    room_type = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}')"
 
 @app.route("/")
 @app.route("/home")
@@ -17,21 +34,8 @@ def about():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash('Account created for {form.username.data}!', 'success') #NOT WORKING! The message fails to pop up.
-        # Hey, add something like this to layout.html. This will grab all the flashed messages and display them.
-        # Delete this when you're done. -JP
-        """{% block content %}
-        <div class="container">
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-        </div>
-        {% endfor %}
-        {% block page_content %}{% endblock %}
-        </div>
-        {% endblock %}"""
-        return redirect(url_for('home'))
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('hotel_form'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -40,10 +44,19 @@ def login():
     if form.validate_on_submit():
         if form.email.data == 'admin@blog.com' and form.password.data == 'password':
             flash('You have been logged in!', 'success') #NOT WORKING! The message fails to pop up.
-            return redirect(url_for('home'))
+            return redirect(url_for('hotel_form'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger') #NOT WORKING! The message fails to pop up.
     return render_template('login.html', title='Login', form=form) 
+
+#Page where the user inputs their information about the stay.
+@app.route("/hotel_form", methods=['GET', 'POST'])
+def hotel_form():
+    form = HotelForm()
+    if form.validate_on_submit():
+        flash(f'Room registered for {form.name.data}. We hope you enjoy your stay!', 'success')
+        return redirect(url_for('home'))
+    return render_template('hotel_form.html', title='Hotel Form', form=form) 
 
 
 if __name__ == '__main__':
