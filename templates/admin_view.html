@@ -1,0 +1,14 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+        <article class="content-section">
+            <h1>Admin View</h1>
+            <table class="table">
+                <thead><tr><th>Name</th><th>RoomType</th><th>NumberOfNights</th></tr></thead>
+                <tbody>
+                    {% for client in clients %}
+                        <tr><td>{{ client.username }}</td><td>{{ client.room_type }}</td><td>{{ client.number_of_nights }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+{% endblock content %}

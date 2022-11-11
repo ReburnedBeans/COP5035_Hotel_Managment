@@ -21,6 +21,37 @@ class User(db.Model):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
+
+clients = [ #Debuggingg for the admin_view page. Plan on removing after DB is set up.
+    {
+        'username': 'Username1',
+        'room_type': 'RoomType1',
+        'number_of_nights': 'Number1'
+    },
+    {
+        'username': 'Username2',
+        'room_type': 'RoomType2',
+        'number_of_nights': 'Number2'
+    },
+    {
+        'username': 'Username3',
+        'room_type': 'RoomType3',
+        'number_of_nights': 'Number3'
+    },
+    {
+        'username': 'Username4',
+        'room_type': 'RoomType4',
+        'number_of_nights': 'Number4'
+    },
+    {
+        'username': 'Username5',
+        'room_type': 'RoomType5',
+        'number_of_nights': 'Number5'
+    }
+    ]
+
+
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -57,6 +88,10 @@ def hotel_form():
         flash(f'Room registered for {form.name.data}. We hope you enjoy your stay!', 'success')
         return redirect(url_for('home'))
     return render_template('hotel_form.html', title='Hotel Form', form=form) 
+
+@app.route("/admin_view")
+def admin_view():
+    return render_template('admin_view.html', title='Admin View', clients=clients)
 
 
 if __name__ == '__main__':
