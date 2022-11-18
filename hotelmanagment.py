@@ -2,7 +2,9 @@ from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy #For using SQLAlchemy
 from forms import HotelForm, RegistrationForm, LoginForm
 
-
+#For seeing if the login user is the admin user.
+adminEmail = 'hotelmanagment213@gmail.com'
+adminPassword = 'AdminView'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1c0f66335b647802e2f8e872def6e6dbd5544841bd963025f2c77a32966fd2cb' #Random Secret key
@@ -73,11 +75,13 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success') #NOT WORKING! The message fails to pop up.
-            return redirect(url_for('hotel_form'))
+        flash('You have been logged in!', 'success') #NOT WORKING! The message fails to pop up.
+        if form.email.data == adminEmail and form.password.data == adminPassword: #Checks if the login user is the admin user.
+            return redirect(url_for('admin_view'))
         else:
-            flash('Login Unsuccessful. Please check username and password', 'danger') #NOT WORKING! The message fails to pop up.
+            return redirect(url_for('hotel_form'))
+    else:
+        flash('Login Unsuccessful. Please check username and password', 'danger') #NOT WORKING! The message fails to pop up.
     return render_template('login.html', title='Login', form=form) 
 
 #Page where the user inputs their information about the stay.
