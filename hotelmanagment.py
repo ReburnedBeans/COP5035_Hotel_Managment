@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy #For using SQLAlchemy
 from forms import HotelForm, RegistrationForm, LoginForm
+#comment
 
 #For seeing if the login user is the admin user.
 adminEmail = 'hotelmanagment213@gmail.com'
