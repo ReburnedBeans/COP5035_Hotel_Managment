@@ -13,12 +13,15 @@ db = SQLAlchemy(app) #For using SQLAlchemy
 
 #For using SQLAlchemy.
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'bookings'
+    booking_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     number_of_nights = db.Column(db.Integer)
     room_type = db.Column(db.Integer)
+
+db.create_all()
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
