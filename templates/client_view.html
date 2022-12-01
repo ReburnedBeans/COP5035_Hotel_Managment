@@ -1,13 +1,11 @@
 ﻿{% extends "layout.html" %}
 {% block content %}
         <article class="content-section">
-            <h1>Hotel Palm Aire</h1>
+            <h1>Alexander S</h1>
             <table class="table">
                 <thead><tr><th>Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
                 <tbody>
-                    {% for client in clients %}
-                        <tr><td>{{ client.username }}</td><td>{{ client.room_type }}</td><td>{{ client.number_of_nights }}</td><td><a class="ml-2 small" href="{{ url_for('admin_view') }}">Remove</a></td></tr>
-                    {% endfor %}
+                    <tr><td>Alexander S</td><td>1-room large</td><td> 2 </td><td><a class="ml-2 small" href="{{ url_for('admin_view') }}">Remove</a></td></tr>
                 </tbody>
             </table>
         </article>

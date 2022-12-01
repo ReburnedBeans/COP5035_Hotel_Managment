@@ -24,31 +24,31 @@ class User(db.Model):
         return f"User('{self.username}', '{self.email}')"
 
 
-clients = [ #Debuggingg for the admin_view page. Plan on removing after DB is set up.
+clients = [ #Debugging for the admin_view page. Plan on removing after DB is set up.
     {
-        'username': 'Username1',
-        'room_type': 'RoomType1',
-        'number_of_nights': 'Number1'
+        'username': 'Samantha R',
+        'room_type': '1-room small',
+        'number_of_nights': '4'
     },
     {
-        'username': 'Username2',
-        'room_type': 'RoomType2',
-        'number_of_nights': 'Number2'
+        'username': 'Alexander S',
+        'room_type': '1-room large',
+        'number_of_nights': '2'
     },
     {
-        'username': 'Username3',
-        'room_type': 'RoomType3',
-        'number_of_nights': 'Number3'
+        'username': 'John H',
+        'room_type': '2-room medium',
+        'number_of_nights': '5'
     },
     {
-        'username': 'Username4',
-        'room_type': 'RoomType4',
-        'number_of_nights': 'Number4'
+        'username': 'Paul F',
+        'room_type': '2-room large',
+        'number_of_nights': '2'
     },
     {
-        'username': 'Username5',
-        'room_type': 'RoomType5',
-        'number_of_nights': 'Number5'
+        'username': 'John B',
+        'room_type': '1-room large',
+        'number_of_nights': '7'
     }
     ]
 
@@ -59,9 +59,6 @@ clients = [ #Debuggingg for the admin_view page. Plan on removing after DB is se
 def home():
     return render_template('home.html')
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -90,13 +87,16 @@ def hotel_form():
     form = HotelForm()
     if form.validate_on_submit():
         flash(f'Room registered for {form.name.data}. We hope you enjoy your stay!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('client_view'))
     return render_template('hotel_form.html', title='Hotel Form', form=form) 
 
 @app.route("/admin_view")
 def admin_view():
     return render_template('admin_view.html', title='Admin View', clients=clients)
 
+@app.route("/client_view")
+def client_view():
+    return render_template('client_view.html', title='Client View', clients=clients)
 
 if __name__ == '__main__':
     app.run(debug=True)
