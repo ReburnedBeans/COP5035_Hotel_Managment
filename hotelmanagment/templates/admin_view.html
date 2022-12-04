@@ -5,8 +5,13 @@
             <table class="table">
                 <thead><tr><th>Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
                 <tbody>
-                    {% for client in clients %}
-                        <tr><td>{{ client.username }}</td><td>{{ client.room_type }}</td><td>{{ client.number_of_nights }}</td><td><a class="ml-2 small" href="{{ url_for('admin_view') }}">Remove</a></td></tr>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.party_name }}</td>
+                            <td>{{ booking.room_type }}</td>
+                            <td>{{ booking.number_of_nights }}</td>
+                         
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

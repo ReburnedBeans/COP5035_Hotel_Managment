@@ -27,7 +27,7 @@
                 <!--login/register-->
                 <div class="navbar-nav">
                     {% if current_user.is_authenticated %}
-                        <a class="nav-item nav-link" href="/account">Account</a>
+                        <a class="nav-item nav-link" href="/client_view">Account</a>
                         <a class="nav-item nav-link" href="/logout">Logout</a>
                     {% else %}
                         <a class="nav-item nav-link" href="/login">Login</a>

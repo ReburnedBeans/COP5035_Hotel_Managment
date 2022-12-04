@@ -1,12 +1,21 @@
 ﻿{% extends "layout.html" %}
 {% block content %}
         <article class="content-section">
-            <h1>Alexander S</h1>
+            <h1>{{ current_user.username }}</h1>
             <table class="table">
                 <thead><tr><th>Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
                 <tbody>
-                    <tr><td>Alexander S</td><td>1-room large</td><td> 2 </td><td><a class="ml-2 small" href="{{ url_for('admin_view') }}">Remove</a></td></tr>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.party_name }}</td>
+                            <td>{{ booking.room_type }}</td>
+                            <td>{{ booking.number_of_nights }}</td>
+                        </tr>
+                    {% endfor %}
+                    
                 </tbody>
             </table>
+
+            <a class="ml-2 small" href="{{ url_for('hotel_form') }}">Want to reserve a room?</a>
         </article>
 {% endblock content %}

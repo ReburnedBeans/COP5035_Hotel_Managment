@@ -1,40 +1,12 @@
 from flask import render_template, url_for, flash, redirect, request
 from hotelmanagment import app, db, bcrypt
 from hotelmanagment.forms import HotelForm, RegistrationForm, LoginForm
-from hotelmanagment.models import User
+from hotelmanagment.models import User, Booking
 from flask_login import login_user, current_user, logout_user, login_required
 
 #For seeing if the login user is the admin user.
 adminEmail = 'hotelmanagment213@gmail.com'
 adminPassword = 'AdminView'
-
-clients = [ #Debugging for the admin_view page. Plan on removing after DB is set up.
-    {
-        'username': 'Samantha R',
-        'room_type': '1-room small',
-        'number_of_nights': '4'
-    },
-    {
-        'username': 'Alexander S',
-        'room_type': '1-room large',
-        'number_of_nights': '2'
-    },
-    {
-        'username': 'John H',
-        'room_type': '2-room medium',
-        'number_of_nights': '5'
-    },
-    {
-        'username': 'Paul F',
-        'room_type': '2-room large',
-        'number_of_nights': '2'
-    },
-    {
-        'username': 'John B',
-        'room_type': '1-room large',
-        'number_of_nights': '7'
-    }
-    ]
 
 
 @app.route("/")
@@ -68,7 +40,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember = form.remember.data)
             next_page = request.args.get("next")
-            return redirect(next_page) if next_page else redirect(url_for('hotel_form')) # This needs to be re-routed to the home page which will have an account button which would then hold reservation page information via hotel_form.
+            return redirect(next_page) if next_page else redirect(url_for('client_view')) # This needs to be re-routed to the home page which will have an account button which would then hold reservation page information via hotel_form.
         elif form.email.data == adminEmail and form.password.data == adminPassword: #Checks if the login user is the admin user.
             flash(f"Greetings Hotel Palm Aire Manager!\n Here is your list of clients currently reserved for rooms.")
             return redirect(url_for('admin_view'))
@@ -80,8 +52,11 @@ def login():
 def hotel_form():
     form = HotelForm()
     if form.validate_on_submit():
-        flash(f'Room registered for {form.name.data}. We hope you enjoy your stay!', 'success')
-        return redirect(url_for('client_view'))
+        booking = Booking(party_name = form.party_name.data, number_of_nights = form.number_of_nights.data, room_type = form.room_type.data, user_id = current_user.id)
+        db.session.add(booking)
+        db.session.commit()
+        flash(f'Your booking information has been saved. Enjoy your stay', 'success')
+        return redirect(url_for('client_view')) 
     return render_template('hotel_form.html', title='Hotel Form', form=form) 
 
 @app.route("/logout")
@@ -96,10 +71,13 @@ def account():
 
 @app.route("/admin_view")
 def admin_view():
-    return render_template('admin_view.html', title='Admin View', clients=clients)
+    bookings = Booking.query.all()
+    return render_template('admin_view.html', title='Admin View', bookings=bookings)
 
 @app.route("/client_view")
+@login_required
 def client_view():
-    return render_template('client_view.html', title='Client View', clients=clients)
+    bookings = Booking.query.filter_by(user_id = current_user.id)
+    return render_template('client_view.html', title='Client View', bookings=bookings)
 
     
