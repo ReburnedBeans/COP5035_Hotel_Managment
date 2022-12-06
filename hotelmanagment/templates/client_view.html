@@ -6,16 +6,15 @@
                 <thead><tr><th>Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
                 <tbody>
                     {% for booking in bookings %}
-                        <tr>
-                            <td>{{ booking.party_name }}</td>
-                            <td>{{ booking.room_type }}</td>
-                            <td>{{ booking.number_of_nights }}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ booking.party_name }}</td>
+                                <td>{{ booking.room_type }}</td>
+                                <td>{{ booking.number_of_nights }}</td>
+                                <td><a href="/delete">Remove</button></td>
+                            </tr>
                     {% endfor %}
-                    
                 </tbody>
             </table>
-
             <a class="ml-2 small" href="{{ url_for('hotel_form') }}">Want to reserve a room?</a>
         </article>
 {% endblock content %}

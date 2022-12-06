@@ -18,18 +18,6 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}')"
 
 
-class AdminUser(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), nullable=False)
-    password = db.Column(db.String(60), nullable=False)
-
-    #posts = db.relationship('Booking', backref='author', lazy=True)
-
-    def __repr__(self):
-        return f"AdminUser('{self.email}')"
-
-
-
 #For using SQLAlchemy.
 class Booking(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

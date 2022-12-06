@@ -1,22 +1,17 @@
 from flask import render_template, url_for, flash, redirect, request
 from hotelmanagment import app, db, bcrypt
 from hotelmanagment.forms import HotelForm, RegistrationForm, LoginForm
-from hotelmanagment.models import User, Booking, AdminUser
+from hotelmanagment.models import User, Booking
 from flask_login import login_user, current_user, logout_user, login_required
 
-#For seeing if the login user is the admin user.
+
 adminEmail = 'hotelmanagment213@gmail.com'
 adminPassword = 'AdminView'
-adminHashedPw = bcrypt.generate_password_hash(adminPassword).decode("utf-8")
-adminUsername = "Manager"
-managerFlag = False
-
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html')
-
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -34,11 +29,6 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    user = User.query.filter_by(email = adminEmail).first()
-    if not user:
-        user = User(username = adminUsername, email = adminEmail, password = adminHashedPw)
-        db.session.add(user)
-        db.session.commit()
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = LoginForm()
@@ -88,5 +78,12 @@ def admin_view():
 def client_view():
     bookings = Booking.query.filter_by(user_id = current_user.id)
     return render_template('client_view.html', title='Client View', bookings=bookings)
+
+@app.route("/delete")
+@login_required
+def delete():
+    bookings = Booking.query.filter_by(user_id = current_user.id).delete()
+    #After fixing the iterable error above for the current_user.id we then need way of deleting rom client_view table after deleting from the Bookings Database
+    return render_template('client_view.html', title ='Client View', bookings = bookings)
 
     
