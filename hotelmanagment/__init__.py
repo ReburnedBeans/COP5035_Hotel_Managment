@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1c0f66335b647802e2f8e872def6e6dbd5544841bd963025f2c77a32966fd2cb' #Random Secret key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' #For using SQLAlchemy
@@ -17,5 +18,7 @@ from hotelmanagment import routes
 
 with app.app_context():
     db.create_all()
+    
+
 
 
