@@ -4,23 +4,23 @@
             <form method="POST" action="" class="form">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Hotel Sign-In</legend>
+                    <legend class="border-bottom mb-4">Reservation Form</legend>
                     <div class="form-group">
-                        {{ form.name.label(class="form-control-label") }}
+                        {{ form.party_name.label(class="form-control-label") }}
                         <div>
-                            <small>This is the name that will show up on the system display.</small>
+                            <small>This is the party_name that will show up on the system display.</small>
                         </div>
 
-                        {% if form.name.errors %}
-                            {{ form.name(class="form-control form-control-lg is-invalid")}}
+                        {% if form.party_name.errors %}
+                            {{ form.party_name(class="form-control form-control-lg is-invalid")}}
                             <div class="invalid-feedback">
-                                {% for error in form.name.errors %}
+                                {% for error in form.party_name.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
                             <br>
-                            {{ form.name(class="form-control-label form-control-lg") }}
+                            {{ form.party_name(class="form-control-label form-control-lg") }}
                         {% endif %}
                     </div>
                     <div class="form-group">

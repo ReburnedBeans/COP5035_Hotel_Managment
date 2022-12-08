@@ -23,21 +23,26 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-header fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="/">Hotel_Name</a>
-                <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="/about">About</a>
-                </div>
+                <a class="navbar-brand mr-4" href="/">Hotel Palm Aire</a>
                 <!--login/register-->
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="/login">Login</a>
-                    <a class="nav-item nav-link" href="/register">Register</a>
+                    {% if current_user.is_authenticated and current_user.email == "hotelmanagment213@gmail.com" %}
+                        <a class="nav-item nav-link" href="/admin_view">Account</a>
+                        <a class="nav-item nav-link" href="/logout">Logout</a>
+                    {% elif current_user.is_authenticated %}
+                        <a class="nav-item nav-link" href="/client_view">Account</a>
+                        <a class="nav-item nav-link" href="/logout">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="/login">Login</a>
+                        <a class="nav-item nav-link" href="/register">Register</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
     </header>
     <main role="main" class="container">
     <div class="col-md-8">
-            {% with messages = get_flashed_messages(with_categories=true)%}
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
                         <div class="alert alert-({ category })">
