@@ -62,11 +62,6 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
-@app.route("/account")
-@login_required
-def account():
-    return render_template('account.html', title='Account')
-
 @app.route("/admin_view")
 @login_required
 def admin_view():
@@ -79,11 +74,26 @@ def client_view():
     bookings = Booking.query.filter_by(user_id = current_user.id)
     return render_template('client_view.html', title='Client View', bookings=bookings)
 
-@app.route("/delete")
-@login_required
-def delete():
-    bookings = Booking.query.filter_by(user_id = current_user.id).delete()
-    #After fixing the iterable error above for the current_user.id we then need way of deleting rom client_view table after deleting from the Bookings Database
-    return render_template('client_view.html', title ='Client View', bookings = bookings)
 
-    
+#@app.route("/delete", methods=["GET", "POST"])
+#@login_required
+#def delete():
+#    bookings = Booking.query.filter_by(party_name="").delete()
+#    db.session.commit()
+#
+#    #return redirect(url_for('client_view'))
+#
+#    return render_template('client_view.html', title ='Client View', bookings=bookings)
+#    
+#    #post = db.get_or_404(Booking, id)
+#
+#    #db.session.delete(post) #Deletes the current booking.
+#    #db.session.commit() #Commits the recent change to the db.
+#    #After fixing the iterable error above for the current_user.id we then need way of deleting rom client_view table after deleting from the Bookings Database
+#    #return render_template('client_view.html', title ='Client View')
+#
+#    #if request.method == "POST":
+#    #    db.session.delete(post)
+#    #    db.session.commit()
+#    #    return render_template('client_view.html', title ='Client View')
+#    #    return render_template('client_view.html', title ='Client View')

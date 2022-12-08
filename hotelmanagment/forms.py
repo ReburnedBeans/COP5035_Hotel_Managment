@@ -36,5 +36,5 @@ class HotelForm(FlaskForm):
     party_name = StringField('Name of Party',
                            validators=[DataRequired(), Length(min=2, max=20)])
     room_type = IntegerField('Room Type', validators=[DataRequired(), NumberRange(1,5)])
-    number_of_nights = IntegerField('Expected Number of Nights Staying', validators=[DataRequired()])
+    number_of_nights = IntegerField('Expected Number of Nights Staying', validators=[DataRequired(), NumberRange(1,)])
     submit = SubmitField('Submit')

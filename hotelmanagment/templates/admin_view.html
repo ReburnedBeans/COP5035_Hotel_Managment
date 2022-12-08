@@ -3,12 +3,30 @@
         <article class="content-section">
             <h1>Hotel Palm Aire Reservations</h1>
             <table class="table">
-                <thead><tr><th>Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
+                <thead><tr><th>Party Name</th><th>Room Type</th><th>Number Of Nights</th></tr></thead>
                 <tbody>
                     {% for booking in bookings %}
                         <tr>
                             <td>{{ booking.party_name }}</td>
-                            <td>{{ booking.room_type }}</td>
+                            
+                            {% if booking.room_type == 1 %}
+                                <td>1-room small</td>
+                            {% else %}
+                                {% if booking.room_type == 2 %}
+                                    <td>1-room medium</td>
+                                {% else %}
+                                    {% if booking.room_type == 3 %}
+                                        <td>1-room large</td>
+                                    {% else %}
+                                        {% if booking.room_type == 4 %}
+                                             <td>2-room medium</td>
+                                        {% else %}
+                                            <td>2-room large</td>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+
                             <td>{{ booking.number_of_nights }}</td>
                          
                         </tr>
